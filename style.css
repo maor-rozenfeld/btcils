@@ -1,0 +1,16 @@
+body {
+	font-size: 1.5em; font-family: "Hammersmith One"; text-align: center;
+}
+
+.loading {
+	position: fixed; top: 0; left: 0; right: 0; bottom: 0;	
+	padding-top: 4em; font-size: 3em;
+	background-color: white;
+}
+
+.main { margin-top: 1.7em }
+.main > div { margin-bottom: 2em; }
+
+.cur { color: #caaf19; }
+.cur:before { display: inline; content: '₪ '; }
+.diff-percentage:after { display: inline; content: ' %'; }
