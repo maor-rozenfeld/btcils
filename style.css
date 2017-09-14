@@ -1,5 +1,5 @@
 body {
-	font-size: 1.5em; font-family: "Hammersmith One"; text-align: center;
+	font-size: 1.5em; font-family: "Arial"; text-align: center;
 }
 
 .loading {
@@ -14,3 +14,6 @@ body {
 .cur { color: #caaf19; }
 .cur:before { display: inline; content: '₪ '; }
 .diff-percentage:after { display: inline; content: ' %'; }
+
+a, a:visited, a:active { color: #83b0e8; text-decoration: none; }
+a:hover { text-decoration: underline; }
