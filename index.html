@@ -6,40 +6,67 @@
 		<meta http-equiv="refresh" content="45">
 	</head>
     <body>
+  		<div class="loading">
+  			Fetching...
+  		</div>
 
-		<div class="loading">
-			Fetching...
-		</div>
+  		<div class="main">
+  			<h1>Bitcoin Price in ILS</h1>
+  			<div class="global-price-container">
+  				<span class="global-price cur"></span>
+          <span class="global-price-usd"> ( <span class="cur usd"></span> )</span><br/>
+          <span class="global-price-note">International USD price in ILS, taken from <a href="http://preev.com/btc/ils">preev.com</a></span>
+  			</div>
+  			<div class="bit2c-container">
+          <h3><a href="https://www.bit2c.co.il">Bit2C</a></h3>
+          <div class="bit2c-last-price">
+            Last price: <span class="price cur"></span>
+            <div class="diff-container">
+              <span class="diff cur"></span>,
+              <span class="diff-percentage percent"></span>
+            </div>
+          </div>
 
-		<div class="main">
-			<h1>Bitcoin Price in ILS</h1>
-			<div class="global-price-container">
-				<a href="http://preev.com/btc/ils">Global</a> price: <span class="global-price cur"></span>
-			</div>
-			<div class="bit2c-price-container">
-				<a href="https://www.bit2c.co.il">Bit2C</a> price: <span class="bit2c-price cur"></span><br/>
-        <div class="diff">
-          Diff: <span class="bit2c-diff cur"></span><br/>
-  				(<span class="bit2c-diff-percentage percent"></span>)
-        </div>
-			</div>
-			<div class="bog-price-container">
-        <a href="https://www.bitsofgold.co.il">Bits of Gold</a> buying price: <span class="bog-buy cur"></span><br/>
-        <div class="diff">
-          Diff: <span class="bog-buy-diff cur"></span><br/>
-          (<span class="bog-buy-diff-percentage percent"></span>)<br/><br/>
-        </div>
-        <a href="https://www.bitsofgold.co.il">Bits of Gold</a> selling price: <span class="bog-sell cur"></span><br/>
-        <div class="diff">
-          Diff: <span class="bog-sell-diff cur"></span><br/>
-          (<span class="bog-sell-diff-percentage percent"></span>)
-        </div>
-			</div>
-		</div>
+          <div class="bit2c-buy">
+            Buy price: <span class="price cur"></span>
+            <div class="diff-container">
+              <span class="diff cur"></span>,
+              <span class="diff-percentage percent"></span>
+            </div>
+          </div>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-		<script src="app.js"></script>
+          <div class="bit2c-sell">
+            Sell price: <span class="price cur"></span>
+            <div class="diff-container">
+              <span class="diff cur"></span>,
+              <span class="diff-percentage percent"></span>
+            </div>
+          </div>
+  			</div>
+
+        <div class="bog-container">
+          <h3><a href="https://www.bitsofgold.co.il">Bits of Gold</a></h3>
+          <div class="bog-buy">
+            Buy price: <span class="price cur"></span>
+            <div class="diff-container">
+              <span class="diff cur"></span>,
+              <span class="diff-percentage percent"></span>
+            </div>
+          </div>
+
+          <div class="bog-sell">
+            Sell price: <span class="price cur"></span>
+            <div class="diff-container">
+              <span class="diff cur"></span>,
+              <span class="diff-percentage percent"></span>
+            </div>
+          </div>
+  			</div>
+  		</div>
+
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  		<script src="app.js"></script>
 
 		  <script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

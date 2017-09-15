@@ -3,9 +3,7 @@
 
 	var waitForRequests = 3;
 	var globalPrice;
-	var bit2cPrice;
-	var bogBuy;
-	var bogSell;
+	var exchangePrices = {};
 	function init() {
 		fetchGlobalPrice();
 		fetchBit2CPrice();
@@ -16,8 +14,9 @@
 		fetchApi('http://preev.com/pulse/units:btc+ils/sources:bitfinex+bitstamp+btce', function(data) {
 			if (data && data.btc && data.ils) {
 				var prices = Object.keys(data.btc.usd).map(function(x) { return data.btc.usd[x].last; }).map(parseFloat);
-				console.log(prices);
-				globalPrice = avg(prices) / data.ils.usd.other.last;
+				var avgUsdPrice = avg(prices);
+				$('.global-price-usd .cur').text(formatNum(avgUsdPrice));
+				globalPrice = avgUsdPrice / data.ils.usd.other.last;
 				$('.global-price').text(formatNum(globalPrice));
 				finishLoading();
 				return;
@@ -28,9 +27,10 @@
 
 	function fetchBit2CPrice() {
 		fetchApi('https://bit2c.co.il/Exchanges/BtcNis/Ticker.json', function(data) {
-			bit2cPrice = parseFloat(_.get(data, 'll'));
-			if (bit2cPrice) {
-				$('.bit2c-price').text(formatNum(bit2cPrice));
+			if (data && data.ll && data.l && data.h) {
+				exchangePrices['bit2c-last-price'] = parseFloat(data.ll);
+				exchangePrices['bit2c-buy'] = parseFloat(data.l);
+				exchangePrices['bit2c-sell'] = parseFloat(data.h);
 				finishLoading();
 				return;
 			}
@@ -42,10 +42,8 @@
 	function fetchBoGPrice() {
 		fetchApi('https://www.bitsofgold.co.il/api/btc', function(data) {
 				if (data && data.buy && data.sell) {
-					bogBuy = parseFloat(data.buy);
-					bogSell = parseFloat(data.sell);
-					$('.bog-buy').text(formatNum(bogBuy));
-					$('.bog-sell').text(formatNum(bogSell));
+					exchangePrices['bog-buy'] = parseFloat(data.buy);
+					exchangePrices['bog-sell'] = parseFloat(data.sell);
 					finishLoading();
 					return;
 				}
@@ -59,17 +57,20 @@
 		if (waitForRequests > 0)
 			return;
 
-		setDiff('bit2c', bit2cPrice);
-		setDiff('bog-buy', bogBuy);
-		setDiff('bog-sell', bogSell);
+		Object.keys(exchangePrices).forEach(function(x) {
+			setPrice(x, exchangePrices[x]);
+		});
 
 		$('.loading').fadeOut();
 	}
 
-	function setDiff(source, price) {
+	function setPrice(source, price) {
+		$('.' + source + ' .price').text(formatNum(price));
+
 		var diff = price - globalPrice;
-		$('.' + source + '-diff').text(formatNum(diff));
-		$('.' + source + '-diff-percentage').text(formatNum(diff / globalPrice * 100));
+		var posClass = diff == 0 ? '' : diff > 0 ? 'positive' : 'negative';
+		$('.' + source + ' .diff').addClass(posClass).text(formatNum(diff));
+		$('.' + source + ' .diff-percentage').addClass(posClass).text(formatNum(diff / globalPrice * 100));
 	}
 
 	function fetchApi(url, callback) {
