@@ -61,7 +61,7 @@
 
 		setDiff('bit2c', bit2cPrice);
 		setDiff('bog-buy', bogBuy);
-		setDiff('bog-sell', bogSell);		
+		setDiff('bog-sell', bogSell);
 
 		$('.loading').fadeOut();
 	}
@@ -91,7 +91,8 @@
 	}
 
 	function showError() {
-		alert('Unkown error');
-		location.reload();
+		$('.loading').text('Unkown error').show();
+		waitForRequests = 9999;
+		setTimeout(function(){location.reload();}, 1500);
 	}
 })();
