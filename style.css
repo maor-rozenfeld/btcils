@@ -3,7 +3,7 @@ body {
 }
 
 .loading {
-	position: fixed; top: 0; left: 0; right: 0; bottom: 0;	
+	position: fixed; top: 0; left: 0; right: 0; bottom: 0;
 	padding-top: 4em; font-size: 3em;
 	background-color: white;
 }
@@ -13,7 +13,9 @@ body {
 
 .cur { color: #caaf19; }
 .cur:before { display: inline; content: '₪ '; }
-.diff-percentage:after { display: inline; content: ' %'; }
+.percent:after { display: inline; content: ' %'; }
 
 a, a:visited, a:active { color: #83b0e8; text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+.diff { font-size: 0.8em; }
