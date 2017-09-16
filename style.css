@@ -15,7 +15,7 @@ xh3 { font-size: 2.5em; }
 .main { margin-top: 1.7em }
 .main > div { margin-bottom: 1.5em; }
 .main > div.bit2c-container { margin-bottom: 2.5em; }
-.main > div > div { margin-bottom: 1em; }
+.main > div > div { margin-bottom: 0.8em; }
 
 .global-price-container { font-size: 1.5em; }
 .global-price-usd { font-size: 0.75em; }
@@ -30,15 +30,14 @@ xh3 { font-size: 2.5em; }
 .cur.positive:before { content: '₪ +'; }
 .negative { color: red; }
 
-.bit2c-buy, .bit2c-sell { font-size: 0.75em; }
-
 a, a:visited, a:active { color: #3f8ef1; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-.diff-container { display: inline; font-size: 0.8em; }
+.diff-container { display: inline; font-size: 0.75em; }
 .diff-container:before { content: '('; display: inline; }
 .diff-container:after { content: ')'; display: inline; }
 
 .footnotes { padding-top: 1.5em; border-top: 1px solid #BBB; max-width: 40em; margin: 0 auto; margin-top: 1.5em; }
 .donate { margin-bottom: 1.5em; font-size: 0.75em; }
+.github svg { width: 1.5em; height: 1.5em; }
 .address { font-size: 0.75em; }
