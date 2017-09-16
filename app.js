@@ -1,10 +1,17 @@
 (function(){
 	init();
 
-	var waitForRequests = 3;
+	var waitForRequests;
 	var globalPrice;
 	var exchangePrices = {};
+
 	function init() {
+		fetchAll();
+		setInterval(fetchAll, 5000);
+	}
+
+	function fetchAll() {
+		waitForRequests = 3;
 		fetchGlobalPrice();
 		fetchBit2CPrice();
 		fetchBoGPrice();
