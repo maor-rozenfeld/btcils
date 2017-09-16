@@ -1,4 +1,11 @@
-@media (min-width: 858px) {
+
+@media (max-width: 702px) {
+    html {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 702px) {
     html {
         font-size: 12px;
     }
@@ -10,18 +17,13 @@
     }
 }
 
-@media (min-width: 702px) {
+@media (min-width: 858px) {
     html {
         font-size: 10px;
     }
 }
 
 
-@media (max-width: 623px) {
-    html {
-        font-size: 12px;
-    }
-}
 
 body {
 	font-size: 2em; font-family: "Arial"; text-align: center;
@@ -61,3 +63,7 @@ a:hover { text-decoration: underline; }
 .diff-container { display: inline; font-size: 0.8em; }
 .diff-container:before { content: '('; display: inline; }
 .diff-container:after { content: ')'; display: inline; }
+
+.footnotes { padding-top: 1.5em; border-top: 1px solid #AAA; max-width: 20em; margin: 0 auto; margin-top: 1.5em; }
+.donate { margin-bottom: 1.5em; font-size: 0.75em; }
+.address { font-size: 0.75em; }
