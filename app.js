@@ -11,6 +11,9 @@
 	}
 
 	function fetchAll() {
+		if (waitForRequests > 0)
+			return;
+
 		waitForRequests = 3;
 		fetchGlobalPrice();
 		fetchBit2CPrice();
