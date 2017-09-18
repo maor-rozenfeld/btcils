@@ -85,7 +85,7 @@
 
 	function fetchApi(url, callback) {
 		url += '?r=' + (new Date()).getTime();
-		$.getJSON("http://query.yahooapis.com/v1/public/yql",
+		$.getJSON("https://query.yahooapis.com/v1/public/yql",
 			{ q: "select * from json where url=\"" + url + "\"", format: "json" },
 			function(data) {
 				callback(_.get(data, 'query.results.json'));
