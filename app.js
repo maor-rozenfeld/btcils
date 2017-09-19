@@ -31,7 +31,8 @@
 				finishLoading();
 				return;
 			}
-			showError();
+
+			showFatalError();
 		});
 	}
 
@@ -44,8 +45,8 @@
 				finishLoading();
 				return;
 			}
-
 			showError();
+			finishLoading();
 		});
 	}
 
@@ -59,6 +60,7 @@
 				}
 
 				showError();
+				finishLoading();
 		});
 	}
 
@@ -102,6 +104,10 @@
 	}
 
 	function showError() {
+
+	}
+
+	function showFatalError() {
 		$('.loading').text('Unkown error').show();
 		waitForRequests = 9999;
 		setTimeout(function(){location.reload();}, 1500);
