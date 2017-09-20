@@ -5,6 +5,8 @@
 	var globalPrice;
 	var exchangePrices = {};
 
+	var lastIlsWorth = 0.29;
+
 	function init() {
 		fetchAll();
 		setInterval(fetchAll, 5000);
@@ -26,7 +28,14 @@
 				var prices = Object.keys(data.btc.usd).map(function(x) { return data.btc.usd[x].last; }).map(parseFloat);
 				var avgUsdPrice = avg(prices);
 				$('.global-price-usd .cur').text(formatNum(avgUsdPrice));
-				globalPrice = avgUsdPrice / data.ils.usd.other.last;
+				var ilsToUsd = parseFloat(_.get(data, 'ils.usd.other.last'));
+				if (Number.isNaN(ilsToUsd)) {
+					console.log('Invalid ILStoUSD ' + _.get(data, 'ils.usd.other.last'));
+				}
+				else {
+					lastIlsWorth = ilsToUsd;
+				}
+				globalPrice = avgUsdPrice / lastIlsWorth;
 				$('.global-price').text(formatNum(globalPrice));
 				finishLoading();
 				return;
@@ -52,15 +61,15 @@
 
 	function fetchBoGPrice() {
 		fetchApi('https://www.bitsofgold.co.il/api/btc', function(data) {
-				if (data && data.buy && data.sell) {
-					exchangePrices['bog-buy'] = parseFloat(data.buy);
-					exchangePrices['bog-sell'] = parseFloat(data.sell);
-					finishLoading();
-					return;
-				}
-
-				showError();
+			if (data && data.buy && data.sell) {
+				exchangePrices['bog-buy'] = parseFloat(data.buy);
+				exchangePrices['bog-sell'] = parseFloat(data.sell);
 				finishLoading();
+				return;
+			}
+
+			showError();
+			finishLoading();
 		});
 	}
 
@@ -81,9 +90,10 @@
 
 		var diff = price - globalPrice;
 		var posClass = diff == 0 ? '' : diff > 0 ? 'positive' : 'negative';
-		$('.' + source + ' .diff').addClass(posClass).text(formatNum(diff));
-		$('.' + source + ' .diff-percentage').addClass(posClass).text(formatNum(diff / globalPrice * 100));
+		$('.' + source + ' .diff').removeClass('positive negative').addClass(posClass).text(formatNum(diff));
+		$('.' + source + ' .diff-percentage').removeClass('positive negative').addClass(posClass).text(formatNum(diff / globalPrice * 100));
 	}
+	window.setPrice = setPrice;
 
 	function fetchApi(url, callback) {
 		url += '?r=' + (new Date()).getTime();
