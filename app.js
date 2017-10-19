@@ -97,7 +97,7 @@
 
 	function fetchApi(url, callback) {
 		url += '?r=' + (new Date()).getTime();		
-		if (!isAltCors) {
+		if (isAltCors) {
 			$.getJSON("https://cors-anywhere.herokuapp.com/" + url,
 				function(data) {
 					callback(data);
