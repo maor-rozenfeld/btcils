@@ -4,6 +4,7 @@
 	var waitForRequests;
 	var globalPrice;
 	var exchangePrices = {};
+	var isAltCors = location && location.hash && /altcors/.test(location.hash);
 
 	var lastIlsWorth = 0.29;
 
@@ -96,8 +97,7 @@
 	window.setPrice = setPrice;
 
 	function fetchApi(url, callback) {
-		url += '?r=' + (new Date()).getTime();
-		var isAltCors = location && location.hash && /altcors/.test(location.hash);
+		url += '?r=' + (new Date()).getTime();		
 		if (!isAltCors) {
 			$.getJSON("https://cors-anywhere.herokuapp.com/" + url,
 				function(data) {
@@ -130,6 +130,7 @@
 	function showFatalError() {
 		$('.loading').text('Unkown error').show();
 		waitForRequests = 9999;
+		location.hash = isAltCors ? '' : 'altcors';
 		setTimeout(function(){location.reload();}, 1500);
 	}
 })();
