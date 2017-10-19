@@ -4,7 +4,7 @@
 	var waitForRequests;
 	var globalPrice;
 	var exchangePrices = {};
-	var isAltCors = location && location.hash && /altcors/.test(location.hash);
+	var isAltCors = !!location && !!location.hash && /altcors/.test(location.hash);
 
 	var lastIlsWorth = 0.29;
 
