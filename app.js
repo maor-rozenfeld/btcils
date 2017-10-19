@@ -1,12 +1,11 @@
 (function(){
-	init();
-
 	var waitForRequests;
 	var globalPrice;
 	var exchangePrices = {};
 	var isAltCors = !!location && !!location.hash && /altcors/.test(location.hash);
-
 	var lastIlsWorth = 0.29;
+	
+	init();
 
 	function init() {
 		fetchAll();
