@@ -97,6 +97,15 @@
 
 	function fetchApi(url, callback) {
 		url += '?r=' + (new Date()).getTime();
+		if (location && location.hash && /altcors/.test(location.hash)) {
+			$.getJSON("https://crossorigin.me/" + url,
+				function(data) {
+					callback(data);
+				}
+			);
+			return;
+		}
+		
 		$.getJSON("https://query.yahooapis.com/v1/public/yql",
 			{ q: "select * from json where url=\"" + url + "\"", format: "json" },
 			function(data) {
