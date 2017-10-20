@@ -98,20 +98,16 @@
 	function fetchApi(url, callback) {
 		url += '?r=' + (new Date()).getTime();		
 		if (isAltCors) {
-			$.getJSON("https://cors-anywhere.herokuapp.com/" + url,
-				function(data) {
-					callback(data);
-				}
-			);
+			$.getJSON("https://cors-anywhere.herokuapp.com/" + url)
+			.then(function(data) { callback(data); } )
+			.catch(function(err) { console.log('Fatal error in alt cors'); console.log(err); showFatalError(); });
 			return;
 		}
 		
-		$.getJSON("https://query.yahooapis.com/v1/public/yql",
-			{ q: "select * from json where url=\"" + url + "\"", format: "json" },
-			function(data) {
-				callback(_.get(data, 'query.results.json'));
-			}
-		);
+		var yqlbody = { q: "select * from json where url=\"" + url + "\"", format: "json" };
+		$.getJSON("https://query.yahooapis.com/v1/public/yql", yqlbody)			
+		.then(function(data) { callback(_.get(data, 'query.results.json')); })
+		.catch(function(err) { console.log('Fatal error in YQL'); console.log(err); showFatalError(); });
 	}
 
 	function formatNum(num) {
