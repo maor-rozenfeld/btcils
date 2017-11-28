@@ -3,7 +3,9 @@
 	var globalPrice;
 	var exchangePrices = {};
 	var lastIlsWorth = 0.29;
-	
+	var updated;
+	var updatedTimeout;
+
 	init();
 
 	function init() {
@@ -18,10 +20,22 @@
 		waitForRequests = 3;
 		$.getJSON("http://btcils-server.apphb.com/get-prices").then(function(x){ 		
 			x = x || {};
+			var previousPrice = globalPrice;
 			fetchGlobalPrice(JSON.parse(x.preev));
 			fetchBit2CPrice(JSON.parse(x.btc));
 			fetchBoGPrice(JSON.parse(x.bog));
+			if (globalPrice != previousPrice) {
+				updated = 0;
+				showUpdateTime();
+			}
 		}).catch(function(err) { console.log('Fatal error in get-prices API'); console.log(err); showFatalError(); });;
+	}
+
+	function showUpdateTime() {
+		$('.updated').text('Last updated ' + updated + ' second(s) ago');
+		updated++;
+		clearTimeout(updatedTimeout);
+		updatedTimeout = setTimeout(showUpdateTime, 1000);
 	}
 
 	function fetchGlobalPrice(data) {

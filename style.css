@@ -41,3 +41,5 @@ a:hover { text-decoration: underline; }
 .donate { margin-bottom: 1.5em; font-size: 0.75em; }
 .github svg { width: 1.5em; height: 1.5em; }
 .address { font-size: 0.75em; }
+
+.updated { font-size: 0.55em; color: #444; margin-top: 20px; }
