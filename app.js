@@ -2,7 +2,6 @@
 	var waitForRequests;
 	var globalPrice;
 	var exchangePrices = {};
-	var isAltCors = !!location && !!location.hash && /altcors/.test(location.hash);
 	var lastIlsWorth = 0.29;
 	
 	init();
@@ -109,7 +108,6 @@
 	function showFatalError() {
 		$('.loading').text('Unkown error').show();
 		waitForRequests = 9999;
-		location.hash = isAltCors ? '' : 'altcors';
 		setTimeout(function(){location.reload();}, 1500);
 	}
 })();
