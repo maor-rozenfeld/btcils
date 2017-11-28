@@ -17,13 +17,15 @@
 			return;
 
 		waitForRequests = 3;
-		fetchGlobalPrice();
-		fetchBit2CPrice();
-		fetchBoGPrice();
+		$.getJSON("http://btcils-server.apphb.com/get-prices").then(function(x){ 		
+			x = x || {};
+			fetchGlobalPrice(JSON.parse(x.preev));
+			fetchBit2CPrice(JSON.parse(x.btc));
+			fetchBoGPrice(JSON.parse(x.bog));
+		}).catch(function(err) { console.log('Fatal error in get-prices API'); console.log(err); showFatalError(); });;
 	}
 
-	function fetchGlobalPrice() {
-		fetchApi('http://preev.com/pulse/units:btc+ils/sources:bitfinex+bitstamp+btce', function(data) {
+	function fetchGlobalPrice(data) {
 			if (data && data.btc && data.ils) {
 				var prices = Object.keys(data.btc.usd).map(function(x) { return data.btc.usd[x].last; }).map(parseFloat);
 				var avgUsdPrice = avg(prices);
@@ -42,11 +44,10 @@
 			}
 
 			showFatalError();
-		});
 	}
 
-	function fetchBit2CPrice() {
-		fetchApi('https://bit2c.co.il/Exchanges/BtcNis/Ticker.json', function(data) {
+	function fetchBit2CPrice(data) {
+		
 			if (data && data.ll && data.l && data.h) {
 				exchangePrices['bit2c-last-price'] = parseFloat(data.ll);
 				exchangePrices['bit2c-buy'] = parseFloat(data.l);
@@ -56,11 +57,10 @@
 			}
 			showError();
 			finishLoading();
-		});
+		
 	}
 
-	function fetchBoGPrice() {
-		fetchApi('https://www.bitsofgold.co.il/api/btc', function(data) {
+	function fetchBoGPrice(data) {
 			if (data && data.buy && data.sell) {
 				exchangePrices['bog-buy'] = parseFloat(data.buy);
 				exchangePrices['bog-sell'] = parseFloat(data.sell);
@@ -70,7 +70,6 @@
 
 			showError();
 			finishLoading();
-		});
 	}
 
 	function finishLoading() {
@@ -94,21 +93,6 @@
 		$('.' + source + ' .diff-percentage').removeClass('positive negative').addClass(posClass).text(formatNum(diff / globalPrice * 100));
 	}
 	window.setPrice = setPrice;
-
-	function fetchApi(url, callback) {
-		url += '?r=' + (new Date()).getTime();		
-		if (isAltCors) {
-			$.getJSON("https://cors-anywhere.herokuapp.com/" + url)
-			.then(function(data) { callback(data); } )
-			.catch(function(err) { console.log('Fatal error in alt cors'); console.log(err); showFatalError(); });
-			return;
-		}
-		
-		var yqlbody = { q: "select * from json where url=\"" + url + "\"", format: "json" };
-		$.getJSON("https://query.yahooapis.com/v1/public/yql", yqlbody)			
-		.then(function(data) { callback(_.get(data, 'query.results.json')); })
-		.catch(function(err) { console.log('Fatal error in YQL'); console.log(err); showFatalError(); });
-	}
 
 	function formatNum(num) {
 		return num.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2 });
