@@ -21,9 +21,9 @@
 		$.getJSON("http://btcils-server.apphb.com/get-prices").then(function(x){ 		
 			x = x || {};
 			var previousPrice = globalPrice;
-			fetchGlobalPrice(JSON.parse(x.preev));
-			fetchBit2CPrice(JSON.parse(x.btc));
-			fetchBoGPrice(JSON.parse(x.bog));
+			fetchGlobalPrice(x.preev && JSON.parse(x.preev));
+			fetchBit2CPrice(x.btc && JSON.parse(x.btc));
+			fetchBoGPrice(x.bog && JSON.parse(x.bog));
 			if (globalPrice != previousPrice) {
 				updated = 0;
 				showUpdateTime();
@@ -59,7 +59,8 @@
 				return;
 			}
 
-			showFatalError();
+			showError();
+			finishLoading();
 	}
 
 	function fetchBit2CPrice(data) {
@@ -125,6 +126,6 @@
 	function showFatalError() {
 		$('.loading').text('Unkown error').show();
 		waitForRequests = 9999;
-		setTimeout(function(){location.reload();}, 1500);
+		//setTimeout(function(){location.reload();}, 1500);
 	}
 })();
