@@ -39,28 +39,32 @@
 	}
 
 	function fetchGlobalPrice(data) {
-			if (data && data.btc && data.ils) {
-				var prices = Object.keys(data.btc.usd).map(function(x) { return data.btc.usd[x].last; }).map(parseFloat);
-				var avgUsdPrice = avg(prices);
-                var formattedUsdPrice = formatNum(avgUsdPrice);
-                $('.global-price-usd .cur').text(formattedUsdPrice);
-				var ilsToUsd = parseFloat(_.get(data, 'ils.usd.other.last'));
-				if (Number.isNaN(ilsToUsd)) {
-					console.log('Invalid ILStoUSD ' + _.get(data, 'ils.usd.other.last'));
-				}
-				else {
-					lastIlsWorth = ilsToUsd;
-				}
-				globalPrice = avgUsdPrice / lastIlsWorth;
-                var formattedIlsPrice = formatNum(globalPrice);
-                $('.global-price').text(formattedIlsPrice);
-                $(document).attr("title", "₪ " + formattedIlsPrice + " ($" + formattedUsdPrice + ") Bitcoin Price in ILS ");
-                finishLoading();
-				return;
-			}
-
+		if (!data || !data.btc || !data.ils) {
 			showError();
 			finishLoading();
+		}
+		
+		var prices = Object.keys(data.btc.usd)
+			.filter(function(x) { return data.btc.usd[x] && data.btc.usd[x].last; })
+			.map(function(x) { return data.btc.usd[x].last; })
+			.map(parseFloat);
+		var avgUsdPrice = avg(prices);
+				var formattedUsdPrice = formatNum(avgUsdPrice);
+				$('.global-price-usd .cur').text(formattedUsdPrice);
+		var ilsToUsd = parseFloat(_.get(data, 'ils.usd.other.last'));
+		if (Number.isNaN(ilsToUsd)) {
+			console.log('Invalid ILStoUSD ' + _.get(data, 'ils.usd.other.last'));
+		}
+		else {
+			lastIlsWorth = ilsToUsd;
+		}
+		globalPrice = avgUsdPrice / lastIlsWorth;
+		var formattedIlsPrice = formatNum(globalPrice);
+		$('.global-price').text(formattedIlsPrice);
+		$(document).attr("title", "₪ " + formattedIlsPrice + " ($" + formattedUsdPrice + ") Bitcoin Price in ILS ");
+		finishLoading();
+		return;
+		
 	}
 
 	function fetchBit2CPrice(data) {
