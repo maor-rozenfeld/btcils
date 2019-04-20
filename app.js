@@ -88,10 +88,17 @@
 
 	function fetchBoGPrice(data) {
 			try {
+				/*bog: "{"btc_spot":{"ILS":19097.33654433701,"EUR":4724.94732843,"USD":5313.07},
+					"eth_spot":{"ILS":623.4325514898817,"EUR":154.24590553659735,"USD":173.44517015},
+						"buy_btc":{"ILS":20305.514667024996,"USD":5649.197235513025,"EUR":5023.867441180223},
+							"buy_eth":{"ILS":662.8735263050311,"USD":184.4180437533227,"EUR":164.00415261732837},
+								"sell_btc":{"ILS":17961.045019948957,"USD":4996.942335,"EUR":4443.812962388415},
+								"sell_eth":{"ILS":586.3383146762337,"USD":163.125182526075,"EUR":145.0682741571698}}"
+								*/
 				data = JSON.parse(data);
-				if (data && data.buy && data.sell) {
-					exchangePrices['bog-buy'] = parseFloat(data.buy);
-					exchangePrices['bog-sell'] = parseFloat(data.sell);
+				if (data && data.buy_btc && data.sell_btc) {
+					exchangePrices['bog-buy'] = parseFloat(data.buy_btc.ILS);
+					exchangePrices['bog-sell'] = parseFloat(data.sell_btc.ILS);
 					finishLoading();
 					return;
 				}
