@@ -79,7 +79,7 @@
 					return;
 				}
 			}
-			catch() {
+			catch {
 			}
 			showError();
 			finishLoading();
@@ -95,7 +95,7 @@
 					finishLoading();
 					return;
 				}
-			catch() {
+			catch {
 			}
 			showError();
 			finishLoading();
