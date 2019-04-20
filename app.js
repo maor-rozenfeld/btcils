@@ -21,9 +21,9 @@
 		$.getJSON("http://btcils-server.apphb.com/get-prices").then(function(x){ 		
 			x = x || {};
 			var previousPrice = globalPrice;
-			fetchGlobalPrice(x.preev && JSON.parse(x.preev));
-			fetchBit2CPrice(x.btc && JSON.parse(x.btc));
-			fetchBoGPrice(x.bog && JSON.parse(x.bog));
+			try { fetchGlobalPrice(x.preev && JSON.parse(x.preev)); } catch { }
+			try { fetchBit2CPrice(x.btc && JSON.parse(x.btc)); } catch { }
+			try { fetchBoGPrice(x.bog && JSON.parse(x.bog)); } catch { }
 			if (globalPrice != previousPrice) {
 				updated = 0;
 				showUpdateTime();
