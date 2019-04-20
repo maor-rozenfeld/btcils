@@ -21,9 +21,9 @@
 		$.getJSON("http://btcils-server.apphb.com/get-prices").then(function(x){ 		
 			x = x || {};
 			var previousPrice = globalPrice;
-			try { fetchGlobalPrice(x.preev && JSON.parse(x.preev)); } catch { }
-			try { fetchBit2CPrice(x.btc && JSON.parse(x.btc)); } catch { }
-			try { fetchBoGPrice(x.bog && JSON.parse(x.bog)); } catch { }
+			fetchGlobalPrice(x.preev);
+			fetchBit2CPrice(x.btc);
+			fetchBoGPrice(x.bog);
 			if (globalPrice != previousPrice) {
 				updated = 0;
 				showUpdateTime();
@@ -39,6 +39,7 @@
 	}
 
 	function fetchGlobalPrice(data) {
+		data = JSON.parse(data);
 		if (!data || !data.btc || !data.ils) {
 			showError();
 			finishLoading();
@@ -68,13 +69,17 @@
 	}
 
 	function fetchBit2CPrice(data) {
-		
-			if (data && data.ll && data.l && data.h) {
-				exchangePrices['bit2c-last-price'] = parseFloat(data.ll);
-				exchangePrices['bit2c-buy'] = parseFloat(data.l);
-				exchangePrices['bit2c-sell'] = parseFloat(data.h);
-				finishLoading();
-				return;
+		        try {
+				data = JSON.parse(data);
+				if (data && data.ll && data.l && data.h) {
+					exchangePrices['bit2c-last-price'] = parseFloat(data.ll);
+					exchangePrices['bit2c-buy'] = parseFloat(data.l);
+					exchangePrices['bit2c-sell'] = parseFloat(data.h);
+					finishLoading();
+					return;
+				}
+			}
+			catch() {
 			}
 			showError();
 			finishLoading();
@@ -82,13 +87,16 @@
 	}
 
 	function fetchBoGPrice(data) {
-			if (data && data.buy && data.sell) {
-				exchangePrices['bog-buy'] = parseFloat(data.buy);
-				exchangePrices['bog-sell'] = parseFloat(data.sell);
-				finishLoading();
-				return;
+			try {
+				data = JSON.parse(data);
+				if (data && data.buy && data.sell) {
+					exchangePrices['bog-buy'] = parseFloat(data.buy);
+					exchangePrices['bog-sell'] = parseFloat(data.sell);
+					finishLoading();
+					return;
+				}
+			catch() {
 			}
-
 			showError();
 			finishLoading();
 	}
