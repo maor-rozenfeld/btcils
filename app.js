@@ -23,7 +23,7 @@
 			var previousPrice = globalPrice;
 			fetchGlobalPrice(x.preev);
 			fetchBit2CPrice(x.btc);
-			fetchBoGPrice(x.bog);
+//			fetchBoGPrice(x.bog);
 			if (globalPrice != previousPrice) {
 				updated = 0;
 				showUpdateTime();
