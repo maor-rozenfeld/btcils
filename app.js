@@ -145,7 +145,8 @@
 
 	function showFatalError() {
 		$('.loading').text('Unkown error').show();
+		$('.gadget').show();
 		waitForRequests = 9999;
-		//setTimeout(function(){location.reload();}, 1500);
+		setTimeout(function(){location.reload();}, 15000);
 	}
 })();
