@@ -118,7 +118,7 @@
 			setPrice(x, exchangePrices[x]);
 		});
 
-		$('.loading').fadeOut();
+		$('.cover').fadeOut();
 	}
 
 	function setPrice(source, price) {
