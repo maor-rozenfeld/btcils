@@ -18,7 +18,7 @@
 			return;
 
 		waitForRequests = 2;
-		$.getJSON("http://btcils-server.apphb.com/get-prices").then(function(x){ 		
+		$.getJSON("https://btcils-server.apphb.com/get-prices").then(function(x){ 		
 			x = x || {};
 			var previousPrice = globalPrice;
 			fetchGlobalPrice(x.preev);
