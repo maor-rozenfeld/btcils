@@ -1,4 +1,9 @@
 (function(){
+
+if (location.protocol !== 'https:') {
+    location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+
 	var waitForRequests;
 	var globalPrice;
 	var exchangePrices = {};
